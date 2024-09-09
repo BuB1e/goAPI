@@ -6,8 +6,10 @@ import (
 	"log"
 
 	"MODULE_NAME/configs"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gofiber/fiber/v2"
+	"github.com/jmoiron/sqlx"
 )
 
 func main() {

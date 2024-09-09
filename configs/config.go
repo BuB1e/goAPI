@@ -11,6 +11,8 @@ type Config struct {
 	DBDatabase string `mapstructure:"DB_DATABASE"`
 	DBUsername string `mapstructure:"DB_USERNAME"`
 	DBPassword string `mapstructure:"DB_PASSWORD"`
+	DBHost 	   string `mapstructure:"DB_HOST"`
+	DBName 	   string `mapstructure:"DB_NAME"`
 	DBPort     string `mapstructure:"DB_PORT"`
 }
 

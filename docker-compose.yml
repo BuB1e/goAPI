@@ -1,36 +1,27 @@
 services:
-  mysql:
-    image: mysql:9.0.1
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_USER: ${DB_USERNAME}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+  db:
+    image: postgres
+    container_name: local_pgdb
+    restart: always
     ports:
-      - "${DB_PORT}:3306"
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "pg"
+      POSTGRES_PASSWORD: "1234"
     volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      - sdd-db-network
-    restart: on-failure
-
-  phpmyadmin:
-    image: phpmyadmin
-    depends_on:
-      - mysql
-    environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
-      PMA_USER: ${DB_USERNAME}
-      PMA_PASSWORD: ${DB_PASSWORD}
+      - local_pgdata:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
     ports:
-      - "9090:80"
-    networks:
-      - sdd-db-network
-    restart: on-failure
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pg@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 1234
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
 volumes:
-  mysql-data:
-    driver: local
-networks:
-  sdd-db-network:
-    driver: bridge
+  local_pgdata:
+  pgadmin-data:
